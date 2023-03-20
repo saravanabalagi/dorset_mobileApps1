@@ -1,8 +1,8 @@
 # Continuous Assessment 1
 
-Student Name: Your name
-Student ID: 123456
-Course: Your course
+- Student Name: Your name
+- Student ID: 123456
+- Course: Your course
 
 ## Requirement Checklist
 
@@ -35,3 +35,5 @@ Course: Your course
 - [ ] Bonus
     - [ ] Use at least one FrameLayout as a separator e.g. to separate two LinearLayouts or TextViews (Hint: Set height 1dp with a light gray background)
     - [ ] Show both icon and text in buttons
+
+SVG files are available on Moodle
