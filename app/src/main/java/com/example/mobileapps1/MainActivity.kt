@@ -139,7 +139,9 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val resBody = response.body?.string()
                     Log.i("MainAct", "Response: $resBody")
-//                    Toast.makeText(this@MainActivity, resBody, Toast.LENGTH_LONG).show()
+                    Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(this@MainActivity, resBody, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         })
