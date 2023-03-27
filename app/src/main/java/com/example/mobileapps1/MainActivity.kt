@@ -18,6 +18,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -96,12 +97,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                Toast.makeText(this, "Result received successfully", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Result action cancelled", Toast.LENGTH_LONG).show()
+            }
+        }
+        val resultIntent = Intent(this, ResultActivity::class.java)
+
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("https://github.com/saravanabalagi/dorset_mobileApps1")
-            }
-            startActivity(intent)
+//            val intent = Intent(Intent.ACTION_VIEW).apply {
+//                data = Uri.parse("https://github.com/saravanabalagi/dorset_mobileApps1")
+//            }
+//            startActivity(intent)
+            launcher.launch(resultIntent)
         }
 
         val nextPageButton = findViewById<Button>(R.id.nextPageButton)
