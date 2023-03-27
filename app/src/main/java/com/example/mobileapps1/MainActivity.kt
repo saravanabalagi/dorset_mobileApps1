@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
 
@@ -42,8 +43,10 @@ class MainActivity : AppCompatActivity() {
 //        val rootView = window.decorView.rootView
         val rootView = findViewById<View>(R.id.root_layout)
 
-        val url = "https://gist.githubusercontent.com/saravanabalagi/3bcc93edc84d700ae62433edd45f3a07/raw/69ca44bbb610541b1898c4e6199c77f62442b89c/sample.txt"
-        makeGetTextRequest(url)
+        val url_simple_text = "https://gist.githubusercontent.com/saravanabalagi/3bcc93edc84d700ae62433edd45f3a07/raw/69ca44bbb610541b1898c4e6199c77f62442b89c/sample.txt"
+        val url_json_array = "https://jsonplaceholder.typicode.com/users"
+//        makeGetTextRequest(url_simple_text)
+        makeGetTextRequest(url_json_array)
 
         val helloText = findViewById<TextView>(R.id.welcomeText)
         helloText.text = getString(R.string.hello_dorset)
@@ -138,7 +141,12 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     val resBody = response.body?.string()
+                    val gson = Gson()
+                    val contacts: Array<Contact> = gson.fromJson(resBody, Array<Contact>::class.java)
                     Log.i("MainAct", "Response: $resBody")
+                    contacts.forEach {
+                        Log.i("MainAct", "Contacts $it")
+                    }
                     Handler(Looper.getMainLooper()).post {
                         Toast.makeText(this@MainActivity, resBody, Toast.LENGTH_LONG).show()
                     }
