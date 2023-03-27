@@ -28,6 +28,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import okhttp3.*
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +41,9 @@ class MainActivity : AppCompatActivity() {
 
 //        val rootView = window.decorView.rootView
         val rootView = findViewById<View>(R.id.root_layout)
+
+        val url = "https://gist.githubusercontent.com/saravanabalagi/3bcc93edc84d700ae62433edd45f3a07/raw/69ca44bbb610541b1898c4e6199c77f62442b89c/sample.txt"
+        makeGetTextRequest(url)
 
         val helloText = findViewById<TextView>(R.id.welcomeText)
         helloText.text = getString(R.string.hello_dorset)
@@ -118,6 +123,26 @@ class MainActivity : AppCompatActivity() {
             val rId = if (position == 0) R.drawable.baseline_link_24 else R.drawable.baseline_person_24
             tab.icon = AppCompatResources.getDrawable(this, rId)
         }.attach()
+    }
+
+    private fun makeGetTextRequest(url: String) {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url(url)
+            .build()
+        client.newCall(request).enqueue(object: Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("MainAct", "GET request failed $e")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val resBody = response.body?.string()
+                    Log.i("MainAct", "Response: $resBody")
+//                    Toast.makeText(this@MainActivity, resBody, Toast.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 
     private fun createNotificationChannel() {
