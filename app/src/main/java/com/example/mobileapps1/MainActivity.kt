@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -37,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         val nameEditText = findViewById<EditText>(R.id.nameEditText)
         val nameText = nameEditText.text
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            Snackbar.make(rootView, "This should appear after 5 seconds", Snackbar.LENGTH_LONG).show()
+        }, 5000)
 
         saveButton.setOnClickListener {
             val welcomeTextString = "Welcome, $nameText!"
