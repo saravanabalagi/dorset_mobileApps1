@@ -36,7 +36,7 @@
 - [App release](https://github.com/saravanabalagi/dorset_mobileApps1/releases/tag/week4)
 - [Link to screencast](https://youtu.be/AoWdhXpOuHU)
 
-## Week 5
+## Week 5 and Week 6
 
 - Vector Assets, Drawable Tint and Background Floating Action Button RelativeLayout View visibility in xml and programmatically
 - Add French lang support
@@ -52,3 +52,18 @@
 - Add image from internet Add permission in manifest Add imageUrl argument
 - Load images from thispersondoesnotexist Add credits Refactor template name
 - [App release](https://github.com/saravanabalagi/dorset_mobileApps1/releases/tag/week5)
+
+## Week 7 and Week 8
+ 
+- Revision
+- Class test
+
+## Week 9
+
+- Execute with delay
+- Create, show and customize Notifications
+- Make GET request
+- Toast after response in main thread
+- Consume JSON API and create objects using Gson
+- Start Activity for result
+- [App release](https://github.com/saravanabalagi/dorset_mobileApps1/releases/tag/week9)
