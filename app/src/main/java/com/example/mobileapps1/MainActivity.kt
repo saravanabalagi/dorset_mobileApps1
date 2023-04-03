@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -40,6 +39,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val sharedPref = getSharedPreferences("auth", Context.MODE_PRIVATE) ?: return
+        val userID = sharedPref.getInt("userID", -1)
+        Toast.makeText(this, "userID: $userID", Toast.LENGTH_LONG).show()
+
+//        write sharedPreference
+//        with (sharedPref.edit()) {
+//            putInt("userID", 11)
+//            apply()
+//        }
 
 //        val rootView = window.decorView.rootView
         val rootView = findViewById<View>(R.id.root_layout)
@@ -141,8 +150,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun makeGetTextRequest(url: String) {
         val client = OkHttpClient()
+
+        val sharedPref = getSharedPreferences("auth", Context.MODE_PRIVATE) ?: return
+        val token = sharedPref.getString("token", "N/A")
+
         val request = Request.Builder()
             .url(url)
+            .addHeader("Authorization", "Bearer $token")
             .build()
         client.newCall(request).enqueue(object: Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -158,9 +172,9 @@ class MainActivity : AppCompatActivity() {
                     contacts.forEach {
                         Log.i("MainAct", "Contacts $it")
                     }
-                    Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(this@MainActivity, resBody, Toast.LENGTH_LONG).show()
-                    }
+//                    Handler(Looper.getMainLooper()).post {
+//                        Toast.makeText(this@MainActivity, resBody, Toast.LENGTH_LONG).show()
+//                    }
                 }
             }
         })
